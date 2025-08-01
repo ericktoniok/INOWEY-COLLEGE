@@ -1,48 +1,22 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { Header } from "@/components/header"
+import { useCart } from "@/context/cart-context"
+import { getAllCourses } from "@/data/courses"
 import Link from "next/link"
-import Image from "next/image"
+import { ShoppingCart } from "lucide-react"
 
 export default function Home() {
+  const courses = getAllCourses()
+  const { addToCart, isInCart } = useCart()
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Promotional Banner */}
-      <div className="bg-gradient-to-r from-green-400 to-green-500 text-white text-center py-3 px-4 text-sm">
-        Last day to get new skills from $13.99 | Have big goals? We have the courses to match. Ends in 20h 33m 22s.
-        <button className="ml-2 text-white hover:text-gray-200">×</button>
-      </div>
-
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            <h1 className="text-2xl font-bold text-violet-600">INOWEY COLLEGE</h1>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/explore">Explore</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/plans">Plans & Pricing</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/business">INOWEY Business</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/instructor">Instructor</Link>
-              </Button>
-            </nav>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="outline">Log in</Button>
-            <Button className="bg-gray-900 text-white hover:bg-gray-800">Sign up</Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-gray-50 py-16 px-4">
@@ -200,97 +174,48 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-gray-900 mb-12">Learners are viewing</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="hover:shadow-lg transition-shadow">
-              <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-t-lg relative">
-                <Badge className="absolute top-3 left-3 bg-orange-500">Bestseller</Badge>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg leading-tight">100 Days of Code: The Complete Python Pro Bootcamp</CardTitle>
-                <CardDescription>Dr. Angela Yu, Developer and Lead Instructor</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
+            {courses.map((course) => (
+              <Card key={course.id} className="hover:shadow-lg transition-shadow">
+                <Link href={`/courses/${course.id}`} className="block">
+                  <div className="w-full h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-t-lg relative">
+                    <Badge className="absolute top-3 left-3 bg-orange-500">Bestseller</Badge>
+                  </div>
+                </Link>
+                <CardHeader className="pb-2">
+                  <Link href={`/courses/${course.id}`} className="block">
+                    <CardTitle className="text-lg leading-tight hover:text-violet-600 transition-colors">
+                      {course.title}
+                    </CardTitle>
+                  </Link>
+                  <CardDescription>{course.instructor}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
                   <div className="flex items-center space-x-2">
                     <span className="text-yellow-500">⭐</span>
-                    <span className="text-sm font-medium">4.7</span>
-                    <span className="text-sm text-gray-500">(383,621)</span>
+                    <span className="text-sm font-medium">{course.rating}</span>
+                    <span className="text-sm text-gray-500">({course.reviews.toLocaleString()})</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-lg font-bold">$19.99</span>
-                    <span className="text-sm text-gray-500 line-through ml-2">$124.99</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <div className="w-full h-48 bg-gradient-to-br from-orange-500 to-red-600 rounded-t-lg relative">
-                <Badge className="absolute top-3 left-3 bg-orange-500">Bestseller</Badge>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg leading-tight">The Complete Full-Stack Web Development Bootcamp</CardTitle>
-                <CardDescription>Dr. Angela Yu, Developer and Lead Instructor</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-yellow-500">⭐</span>
-                    <span className="text-sm font-medium">4.7</span>
-                    <span className="text-sm text-gray-500">(447,382)</span>
+                  <div className="flex items-center justify-between">
+                    <div className="text-right">
+                      <span className="text-lg font-bold">${course.price}</span>
+                    </div>
+                    <Button
+                      onClick={(e) => {
+                        e.preventDefault()
+                        addToCart(course)
+                      }}
+                      disabled={isInCart(course.id)}
+                      size="sm"
+                      className="bg-violet-600 hover:bg-violet-700"
+                    >
+                      <ShoppingCart className="h-4 w-4 mr-1" />
+                      {isInCart(course.id) ? 'In Cart' : 'Add to Cart'}
+                    </Button>
                   </div>
-                  <div className="text-right">
-                    <span className="text-lg font-bold">$18.99</span>
-                    <span className="text-sm text-gray-500 line-through ml-2">$119.99</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <div className="w-full h-48 bg-gradient-to-br from-purple-500 to-pink-600 rounded-t-lg relative">
-                <Badge className="absolute top-3 left-3 bg-orange-500">Bestseller</Badge>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg leading-tight">[NEW] Ultimate AWS Certified Cloud Practitioner CLF-C02 2025</CardTitle>
-                <CardDescription>Stephane Maarek | AWS Certified Cloud...</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-yellow-500">⭐</span>
-                    <span className="text-sm font-medium">4.7</span>
-                    <span className="text-sm text-gray-500">(258,587)</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-lg font-bold">$24.99</span>
-                    <span className="text-sm text-gray-500 line-through ml-2">$159.99</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow">
-              <div className="w-full h-48 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-t-lg relative">
-                <Badge className="absolute top-3 left-3 bg-orange-500">Bestseller</Badge>
-              </div>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg leading-tight">Ultimate AWS Certified Solutions Architect Associate 2025</CardTitle>
-                <CardDescription>Stephane Maarek | AWS Certified Cloud...</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-yellow-500">⭐</span>
-                    <span className="text-sm font-medium">4.7</span>
-                    <span className="text-sm text-gray-500">(264,689)</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-lg font-bold">$19.99</span>
-                    <span className="text-sm text-gray-500 line-through ml-2">$124.99</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>

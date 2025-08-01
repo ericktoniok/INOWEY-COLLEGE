@@ -13,6 +13,18 @@ export interface Course {
   lessons: number
   duration: string
   category: string
+  // Add video preview for course details
+  previewVideo?: string
+  instructor: string
+  level: 'Beginner' | 'Intermediate' | 'Advanced'
+  lastUpdated: string
+  curriculum: CourseSection[]
+}
+
+export interface CourseSection {
+  id: number
+  title: string
+  lessons: Lesson[]
 }
 
 export interface CourseCreationData {
@@ -33,4 +45,29 @@ export interface Lesson {
   duration: string
   type: 'video' | 'document' | 'quiz' | 'assignment'
   completed: boolean
+  videoUrl?: string
+  isPreview?: boolean
+}
+
+// Cart Types
+export interface CartItem {
+  id: number
+  course: Course
+  quantity: number
+  addedAt: Date
+}
+
+export interface CartState {
+  items: CartItem[]
+  total: number
+  itemCount: number
+}
+
+export interface CartContextType {
+  cart: CartState
+  addToCart: (course: Course) => void
+  removeFromCart: (courseId: number) => void
+  updateQuantity: (courseId: number, quantity: number) => void
+  clearCart: () => void
+  isInCart: (courseId: number) => boolean
 }

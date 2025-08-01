@@ -43,7 +43,11 @@ const mockCourses: Course[] = [
     completion: 95,
     lessons: 45,
     duration: "32 hours",
-    category: "Web Development"
+    category: "Web Development",
+    instructor: "Instructor Name",
+    level: "Beginner",
+    lastUpdated: "January 2025",
+    curriculum: []
   },
   {
     id: 2,
@@ -59,7 +63,11 @@ const mockCourses: Course[] = [
     completion: 88,
     lessons: 38,
     duration: "28 hours",
-    category: "Data Science"
+    category: "Data Science",
+    instructor: "Instructor Name",
+    level: "Intermediate",
+    lastUpdated: "December 2024",
+    curriculum: []
   },
   {
     id: 3,
@@ -75,7 +83,11 @@ const mockCourses: Course[] = [
     completion: 60,
     lessons: 25,
     duration: "18 hours",
-    category: "Marketing"
+    category: "Marketing",
+    instructor: "Instructor Name",
+    level: "Beginner",
+    lastUpdated: "January 2025",
+    curriculum: []
   }
 ]
 
@@ -105,7 +117,15 @@ export default function InstructorDashboard() {
       completion: 0,
       lessons: courseData.lessons.length,
       duration: courseData.duration || "0 hours",
-      category: courseData.category
+      category: courseData.category,
+      instructor: "Instructor Name",
+      level: courseData.difficulty as 'Beginner' | 'Intermediate' | 'Advanced',
+      lastUpdated: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      curriculum: [{
+        id: 1,
+        title: "Course Content",
+        lessons: courseData.lessons
+      }]
     }
     setCourses([...courses, newCourse])
   }
