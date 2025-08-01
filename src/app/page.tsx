@@ -22,6 +22,9 @@ export default function Home() {
               <Button variant="ghost" className="text-gray-700">Explore</Button>
               <Button variant="ghost" className="text-gray-700">Plans & Pricing</Button>
               <Button variant="ghost" className="text-gray-700">INOWEY Business</Button>
+              <Button variant="ghost" className="text-gray-700" asChild>
+                <a href="/dashboard">Dashboard</a>
+              </Button>
             </nav>
           </div>
           <div className="flex items-center space-x-4">
