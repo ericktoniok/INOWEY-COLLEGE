@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 import Image from "next/image"
 
 export default function Home() {
@@ -19,11 +20,17 @@ export default function Home() {
           <div className="flex items-center space-x-8">
             <h1 className="text-2xl font-bold text-violet-600">INOWEY COLLEGE</h1>
             <nav className="hidden md:flex items-center space-x-6">
-              <Button variant="ghost" className="text-gray-700">Explore</Button>
-              <Button variant="ghost" className="text-gray-700">Plans & Pricing</Button>
-              <Button variant="ghost" className="text-gray-700">INOWEY Business</Button>
               <Button variant="ghost" className="text-gray-700" asChild>
-                <a href="/dashboard">Dashboard</a>
+                <Link href="/explore">Explore</Link>
+              </Button>
+              <Button variant="ghost" className="text-gray-700" asChild>
+                <Link href="/plans">Plans & Pricing</Link>
+              </Button>
+              <Button variant="ghost" className="text-gray-700" asChild>
+                <Link href="/business">INOWEY Business</Link>
+              </Button>
+              <Button variant="ghost" className="text-gray-700" asChild>
+                <Link href="/dashboard">Dashboard</Link>
               </Button>
             </nav>
           </div>
