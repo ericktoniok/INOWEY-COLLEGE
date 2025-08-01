@@ -32,6 +32,9 @@ export default function Home() {
               <Button variant="ghost" className="text-gray-700" asChild>
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
+              <Button variant="ghost" className="text-gray-700" asChild>
+                <Link href="/instructor">Instructor</Link>
+              </Button>
             </nav>
           </div>
           <div className="flex items-center space-x-4">
