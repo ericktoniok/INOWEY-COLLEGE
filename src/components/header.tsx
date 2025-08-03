@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
 import { ShoppingCart, Trash2, ChevronDown } from "lucide-react"
@@ -38,8 +38,11 @@ export function Header() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem asChild>
-                    <Link href="/my-elearning" className="w-full">My E-Learning</Link>
+                    <Link href="/my-elearning" className="w-full font-semibold text-violet-600">
+                      📚 My E-Learning
+                    </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
                     <Link href="/explore" className="w-full">Explore</Link>
                   </DropdownMenuItem>
@@ -113,8 +116,12 @@ export function Header() {
               </SheetContent>
             </Sheet>
 
-            <Button variant="outline">Log in</Button>
-            <Button className="bg-gray-900 text-white hover:bg-gray-800">Sign up</Button>
+            <Button variant="outline" asChild>
+              <Link href="/my-elearning">Log in</Link>
+            </Button>
+            <Button className="bg-gray-900 text-white hover:bg-gray-800" asChild>
+              <Link href="/my-elearning">Sign up</Link>
+            </Button>
           </div>
         </div>
       </header>
