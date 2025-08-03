@@ -38,6 +38,9 @@ export function Header() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem asChild>
+                    <Link href="/my-elearning" className="w-full">My E-Learning</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/explore" className="w-full">Explore</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
