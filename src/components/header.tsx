@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useCart } from "@/context/cart-context"
 import Link from "next/link"
-import { ShoppingCart, Trash2 } from "lucide-react"
+import { ShoppingCart, Trash2, ChevronDown } from "lucide-react"
 
 export function Header() {
   const { cart, removeFromCart } = useCart()
@@ -28,18 +29,25 @@ export function Header() {
               </h1>
             </Link>
             <nav className="hidden md:flex items-center space-x-6">
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/explore">Explore</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/plans">Plans & Pricing</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/business">INOWEY Business</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="text-gray-700 flex items-center space-x-1">
+                    <span>Dashboard</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore" className="w-full">Explore</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/plans" className="w-full">Price & Listing</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/business" className="w-full">INOWEY Business</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="ghost" className="text-gray-700" asChild>
                 <Link href="/instructor">Instructor</Link>
               </Button>

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Header } from "@/components/header"
 import Link from "next/link"
 
 export default function Dashboard() {
@@ -122,42 +123,35 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="text-2xl font-bold text-violet-600">INOWEY COLLEGE</Link>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/explore">Explore</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/plans">Plans & Pricing</Link>
-              </Button>
-              <Button variant="ghost" className="text-gray-700" asChild>
-                <Link href="/business">INOWEY Business</Link>
-              </Button>
-              <Button variant="default" className="bg-violet-600 text-white">Dashboard</Button>
-            </nav>
-          </div>
+      <Header />
+
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* User Profile Section */}
+        <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">🔔</Button>
-            <Avatar>
+            <Avatar className="h-16 w-16">
               <AvatarImage src={user.avatar} />
-              <AvatarFallback className="bg-violet-100 text-violet-600">JD</AvatarFallback>
+              <AvatarFallback className="bg-violet-100 text-violet-600 text-xl">JD</AvatarFallback>
             </Avatar>
-            <div className="hidden md:block">
-              <p className="font-medium text-gray-900">{user.name}</p>
-              <p className="text-sm text-gray-500">Student since {user.joinDate}</p>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-gray-900">{user.name}</h1>
+              <p className="text-gray-600">Student since {user.joinDate}</p>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" className="text-gray-600">
+                🔔 Notifications
+              </Button>
+              <Button variant="outline" size="sm">
+                Edit Profile
+              </Button>
             </div>
           </div>
         </div>
-      </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, {user.name}! 👋</h1>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome back! 👋</h2>
           <p className="text-gray-600">Continue your learning journey and achieve your goals.</p>
         </div>
 
